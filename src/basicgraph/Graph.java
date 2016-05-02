@@ -122,7 +122,13 @@ public abstract class Graph {
 	 */
 	public List<Integer> degreeSequence() {
 		// XXX: Implement in part 1 of week 1
-		return null;
+		List<Integer> degreeSeq = new ArrayList<>();
+		for (int i = 0; i < getNumVertices(); i++) {
+			degreeSeq.add(getNeighbors(i).size() + getInNeighbors(i).size());
+		}
+		Collections.sort(degreeSeq);
+		Collections.reverse(degreeSeq);
+		return degreeSeq;
 	}
 	
 	/**
@@ -228,7 +234,7 @@ public abstract class Graph {
 
 	
 	public static void main (String[] args) {
-		GraphLoader.createIntersectionsFile("data/maps/myucsd.map", "data/intersections/myucsd.intersections");
+		GraphLoader.createIntersectionsFile("data/maps/ucsd.map", "data/intersections/ucsd.intersections");
 		
 
 		// For testing of Part 1 functionality

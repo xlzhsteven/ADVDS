@@ -108,7 +108,14 @@ public class GraphAdjMatrix extends Graph {
 	 * @return List<Integer> a list of indices of vertices.  
 	 */	
 	public List<Integer> getDistance2(int v) {
-		return null;
+		List<Integer> firstHop = getNeighbors(v);
+		List<Integer> twoHopsList = new ArrayList<>();
+		for (Integer i : firstHop) {
+			if (getNeighbors(i).size()>0) {
+				twoHopsList.addAll(getNeighbors(i));
+			}
+		}
+		return twoHopsList;
 	}
 	
 	/**
