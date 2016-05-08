@@ -8,6 +8,8 @@
 package roadgraph;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -24,6 +26,7 @@ import util.GraphLoader;
  */
 public class MapGraph {
 	//TODO: Add your member variables here in WEEK 2
+	HashMap<GeographicPoint, MapNode> mapNodes = null;
 	
 	
 	/** 
@@ -41,7 +44,7 @@ public class MapGraph {
 	public int getNumVertices()
 	{
 		//TODO: Implement this method in WEEK 2
-		return 0;
+		return mapNodes.size();
 	}
 	
 	/**
@@ -51,7 +54,8 @@ public class MapGraph {
 	public Set<GeographicPoint> getVertices()
 	{
 		//TODO: Implement this method in WEEK 2
-		return null;
+		
+		return mapNodes.keySet();
 	}
 	
 	/**
@@ -61,7 +65,12 @@ public class MapGraph {
 	public int getNumEdges()
 	{
 		//TODO: Implement this method in WEEK 2
-		return 0;
+		int numEdges = 0;
+		
+		for (MapNode node : mapNodes.values()) {
+			numEdges += node.getEdges().size();
+		}
+		return numEdges;
 	}
 
 	
@@ -76,7 +85,13 @@ public class MapGraph {
 	public boolean addVertex(GeographicPoint location)
 	{
 		// TODO: Implement this method in WEEK 2
-		return false;
+		if (null == location || mapNodes.containsKey(location)) {
+			return false;
+		}
+		MapNode node = new MapNode();
+		node.setNode(location);
+		mapNodes.put(location, node);
+		return true;
 	}
 	
 	/**
@@ -95,7 +110,20 @@ public class MapGraph {
 			String roadType, double length) throws IllegalArgumentException {
 
 		//TODO: Implement this method in WEEK 2
-		
+		if (mapNodes.containsKey(from) && mapNodes.containsKey(to)) {
+			MapEdge edge = new MapEdge();
+			edge.setStart(from);
+			edge.setGoal(to);
+			edge.setStreetName(roadName);
+			edge.setStreetType(roadType);
+			edge.setDistance(length);
+			if (null == mapNodes.get(from).getEdges()) {
+				mapNodes.get(from).setEdges(new ArrayList<>());
+				mapNodes.get(from).getEdges().add(edge);
+			} else {
+				mapNodes.get(from).getEdges().add(edge);
+			}
+		}
 	}
 	
 
